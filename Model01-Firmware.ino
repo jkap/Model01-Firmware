@@ -6,12 +6,10 @@
 #define BUILD_INFORMATION "locally built"
 #endif
 
-
 /**
  * These #include directives pull in the Kaleidoscope firmware core,
  * as well as the Kaleidoscope plugins we use in the Model 01's firmware
  */
-
 
 // The Kaleidoscope core
 #include "Kaleidoscope.h"
@@ -59,7 +57,6 @@
 // Support for host power management (suspend & wakeup)
 #include "Kaleidoscope-HostPowerManagement.h"
 
-
 /** This 'enum' is a list of all the macros used by the Model 01's firmware
   * The names aren't particularly important. What is important is that each
   * is unique.
@@ -73,11 +70,11 @@
   * a macro key is pressed.
   */
 
-enum { MACRO_VERSION_INFO,
-       MACRO_ANY
-     };
-
-
+enum
+{
+  MACRO_VERSION_INFO,
+  MACRO_ANY
+};
 
 /** The Model 01's key layouts are defined as 'keymaps'. By default, there are three
   * keymaps: The standard QWERTY keymap, the "Function layer" keymap and the "Numpad"
@@ -121,7 +118,12 @@ enum { MACRO_VERSION_INFO,
   *
   */
 
-enum { QWERTY, NUMPAD, FUNCTION }; // layers
+enum
+{
+  QWERTY,
+  NUMPAD,
+  FUNCTION
+}; // layers
 
 /* This comment temporarily turns off astyle's indent enforcement
  *   so we can make the keymaps actually resemble the physical key layout better
@@ -130,53 +132,49 @@ enum { QWERTY, NUMPAD, FUNCTION }; // layers
 
 KEYMAPS(
 
-  [QWERTY] = KEYMAP_STACKED
-  (___,          Key_1, Key_2, Key_3, Key_4, Key_5, Key_LEDEffectNext,
-   Key_Backtick, Key_Q, Key_W, Key_E, Key_R, Key_T, Key_Tab,
-   Key_PageUp,   Key_A, Key_S, Key_D, Key_F, Key_G,
-   Key_PageDown, Key_Z, Key_X, Key_C, Key_V, Key_B, Key_Escape,
-   Key_LeftControl, Key_Backspace, Key_LeftGui, Key_LeftShift,
-   ShiftToLayer(FUNCTION),
+    [QWERTY] = KEYMAP_STACKED(___, Key_1, Key_2, Key_3, Key_4, Key_5, Key_LEDEffectNext,
+                              Key_Backtick, Key_Q, Key_W, Key_E, Key_R, Key_T, Key_Tab,
+                              Key_PageUp, Key_A, Key_S, Key_D, Key_F, Key_G,
+                              Key_PageDown, Key_Z, Key_X, Key_C, Key_V, Key_B, Key_Escape,
+                              Key_LeftControl, Key_Backspace, Key_LeftGui, Key_LeftShift,
+                              ShiftToLayer(FUNCTION),
 
-   M(MACRO_ANY),  Key_6, Key_7, Key_8,     Key_9,         Key_0,         LockLayer(NUMPAD),
-   Key_Enter,     Key_Y, Key_U, Key_I,     Key_O,         Key_P,         Key_Equals,
-                  Key_H, Key_J, Key_K,     Key_L,         Key_Semicolon, Key_Quote,
-   Key_RightAlt,  Key_N, Key_M, Key_Comma, Key_Period,    Key_Slash,     Key_Minus,
-   Key_RightShift, Key_LeftAlt, Key_Spacebar, Key_RightControl,
-   ShiftToLayer(FUNCTION)),
+                              M(MACRO_ANY), Key_6, Key_7, Key_8, Key_9, Key_0, LockLayer(NUMPAD),
+                              Key_Enter, Key_Y, Key_U, Key_I, Key_O, Key_P, Key_Equals,
+                              Key_H, Key_J, Key_K, Key_L, Key_Semicolon, Key_Quote,
+                              Key_RightAlt, Key_N, Key_M, Key_Comma, Key_Period, Key_Slash, Key_Minus,
+                              Key_RightShift, Key_LeftAlt, Key_Spacebar, Key_RightControl,
+                              ShiftToLayer(FUNCTION)),
 
+    [NUMPAD] = KEYMAP_STACKED(___, ___, ___, ___, ___, ___, ___,
+                              ___, ___, ___, ___, ___, ___, ___,
+                              ___, ___, ___, ___, ___, ___,
+                              ___, ___, ___, ___, ___, ___, ___,
+                              ___, ___, ___, ___,
+                              ___,
 
-  [NUMPAD] =  KEYMAP_STACKED
-  (___, ___, ___, ___, ___, ___, ___,
-   ___, ___, ___, ___, ___, ___, ___,
-   ___, ___, ___, ___, ___, ___,
-   ___, ___, ___, ___, ___, ___, ___,
-   ___, ___, ___, ___,
-   ___,
+                              M(MACRO_VERSION_INFO), ___, Key_Keypad7, Key_Keypad8, Key_Keypad9, Key_KeypadSubtract, ___,
+                              ___, ___, Key_Keypad4, Key_Keypad5, Key_Keypad6, Key_KeypadAdd, ___,
+                              ___, Key_Keypad1, Key_Keypad2, Key_Keypad3, Key_Equals, ___,
+                              ___, ___, Key_Keypad0, Key_KeypadDot, Key_KeypadMultiply, Key_KeypadDivide, Key_Enter,
+                              ___, ___, ___, ___,
+                              ___),
 
-   M(MACRO_VERSION_INFO),  ___, Key_Keypad7, Key_Keypad8,   Key_Keypad9,        Key_KeypadSubtract, ___,
-   ___,                    ___, Key_Keypad4, Key_Keypad5,   Key_Keypad6,        Key_KeypadAdd,      ___,
-                           ___, Key_Keypad1, Key_Keypad2,   Key_Keypad3,        Key_Equals,         ___,
-   ___,                    ___, Key_Keypad0, Key_KeypadDot, Key_KeypadMultiply, Key_KeypadDivide,   Key_Enter,
-   ___, ___, ___, ___,
-   ___),
+    [FUNCTION] = KEYMAP_STACKED(___, Key_F1, Key_F2, Key_F3, Key_F4, Key_F5, XXX,
+                                Key_Tab, ___, Key_mouseUp, ___, Key_mouseBtnR, Key_mouseWarpEnd, Key_mouseWarpNE,
+                                Key_Home, Key_mouseL, Key_mouseDn, Key_mouseR, Key_mouseBtnL, Key_mouseWarpNW,
+                                Key_End, Key_PrintScreen, Key_Insert, ___, Key_mouseBtnM, Key_mouseWarpSW, Key_mouseWarpSE,
+                                ___, Key_Delete, ___, ___,
+                                ___,
 
-  [FUNCTION] =  KEYMAP_STACKED
-  (___,      Key_F1,           Key_F2,      Key_F3,     Key_F4,        Key_F5,           XXX,
-   Key_Tab,  ___,              Key_mouseUp, ___,        Key_mouseBtnR, Key_mouseWarpEnd, Key_mouseWarpNE,
-   Key_Home, Key_mouseL,       Key_mouseDn, Key_mouseR, Key_mouseBtnL, Key_mouseWarpNW,
-   Key_End,  Key_PrintScreen,  Key_Insert,  ___,        Key_mouseBtnM, Key_mouseWarpSW,  Key_mouseWarpSE,
-   ___, Key_Delete, ___, ___,
-   ___,
+                                Consumer_ScanPreviousTrack, Key_F6, Key_F7, Key_F8, Key_F9, Key_F10, Key_F11,
+                                Consumer_PlaySlashPause, Consumer_ScanNextTrack, Key_LeftCurlyBracket, Key_RightCurlyBracket, Key_LeftBracket, Key_RightBracket, Key_F12,
+                                Key_LeftArrow, Key_DownArrow, Key_UpArrow, Key_RightArrow, ___, ___,
+                                Key_PcApplication, Consumer_Mute, Consumer_VolumeDecrement, Consumer_VolumeIncrement, ___, Key_Backslash, Key_Pipe,
+                                ___, ___, Key_Enter, ___,
+                                ___)
 
-   Consumer_ScanPreviousTrack, Key_F6,                 Key_F7,                   Key_F8,                   Key_F9,          Key_F10,          Key_F11,
-   Consumer_PlaySlashPause,    Consumer_ScanNextTrack, Key_LeftCurlyBracket,     Key_RightCurlyBracket,    Key_LeftBracket, Key_RightBracket, Key_F12,
-                               Key_LeftArrow,          Key_DownArrow,            Key_UpArrow,              Key_RightArrow,  ___,              ___,
-   Key_PcApplication,          Consumer_Mute,          Consumer_VolumeDecrement, Consumer_VolumeIncrement, ___,             Key_Backslash,    Key_Pipe,
-   ___, ___, Key_Enter, ___,
-   ___)
-
-	) // KEYMAPS(
+        ) // KEYMAPS(
 
 /* Re-enable astyle's indent enforcement */
 // *INDENT-ON*
@@ -186,8 +184,10 @@ KEYMAPS(
  *  prints out the firmware build information as virtual keystrokes
  */
 
-static void versionInfoMacro(uint8_t keyState) {
-  if (keyToggledOn(keyState)) {
+static void versionInfoMacro(uint8_t keyState)
+{
+  if (keyToggledOn(keyState))
+  {
     Macros.type(PSTR("Keyboardio Model 01 - Kaleidoscope "));
     Macros.type(PSTR(BUILD_INFORMATION));
   }
@@ -201,7 +201,8 @@ static void versionInfoMacro(uint8_t keyState) {
  *
  */
 
-static void anyKeyMacro(uint8_t keyState) {
+static void anyKeyMacro(uint8_t keyState)
+{
   static Key lastKey;
   if (keyToggledOn(keyState))
     lastKey.keyCode = Key_A.keyCode + (uint8_t)(millis() % 36);
@@ -209,7 +210,6 @@ static void anyKeyMacro(uint8_t keyState) {
   if (keyIsPressed(keyState))
     kaleidoscope::hid::pressKey(lastKey);
 }
-
 
 /** macroAction dispatches keymap events that are tied to a macro
     to that macro. It takes two uint8_t parameters.
@@ -223,8 +223,10 @@ static void anyKeyMacro(uint8_t keyState) {
 
  */
 
-const macro_t *macroAction(uint8_t macroIndex, uint8_t keyState) {
-  switch (macroIndex) {
+const macro_t *macroAction(uint8_t macroIndex, uint8_t keyState)
+{
+  switch (macroIndex)
+  {
 
   case MACRO_VERSION_INFO:
     versionInfoMacro(keyState);
@@ -237,12 +239,9 @@ const macro_t *macroAction(uint8_t macroIndex, uint8_t keyState) {
   return MACRO_NONE;
 }
 
-
-
 // These 'solid' color effect definitions define a rainbow of
 // LED color modes calibrated to draw 500mA or less on the
 // Keyboardio Model 01.
-
 
 static kaleidoscope::LEDSolidColor solidRed(160, 0, 0);
 static kaleidoscope::LEDSolidColor solidOrange(140, 70, 0);
@@ -255,8 +254,10 @@ static kaleidoscope::LEDSolidColor solidViolet(130, 0, 120);
 /** toggleLedsOnSuspendResume toggles the LEDs off when the host goes to sleep,
  * and turns them back on when it wakes up.
  */
-void toggleLedsOnSuspendResume(kaleidoscope::HostPowerManagement::Event event) {
-  switch (event) {
+void toggleLedsOnSuspendResume(kaleidoscope::HostPowerManagement::Event event)
+{
+  switch (event)
+  {
   case kaleidoscope::HostPowerManagement::Suspend:
     LEDControl.paused = true;
     LEDControl.set_all_leds_to({0, 0, 0});
@@ -275,7 +276,8 @@ void toggleLedsOnSuspendResume(kaleidoscope::HostPowerManagement::Event event) {
  * resume, and sleep) to other functions that perform action based on these
  * events.
  */
-void hostPowerManagementEventHandler(kaleidoscope::HostPowerManagement::Event event) {
+void hostPowerManagementEventHandler(kaleidoscope::HostPowerManagement::Event event)
+{
   toggleLedsOnSuspendResume(event);
 }
 
@@ -283,63 +285,46 @@ void hostPowerManagementEventHandler(kaleidoscope::HostPowerManagement::Event ev
 // The order can be important. For example, LED effects are
 // added in the order they're listed here.
 KALEIDOSCOPE_INIT_PLUGINS(
-  // The boot greeting effect pulses the LED button for 10 seconds after the keyboard is first connected
-  BootGreetingEffect,
+    // The boot greeting effect pulses the LED button for 10 seconds after the keyboard is first connected
+    BootGreetingEffect,
 
-  // The hardware test mode, which can be invoked by tapping Prog, LED and the left Fn button at the same time.
-  TestMode,
+    // The hardware test mode, which can be invoked by tapping Prog, LED and the left Fn button at the same time.
+    TestMode,
 
-  // LEDControl provides support for other LED modes
-  LEDControl,
+    // LEDControl provides support for other LED modes
+    LEDControl,
 
-  // We start with the LED effect that turns off all the LEDs.
-  LEDOff,
+    // We start with the LED effect that turns off all the LEDs.
+    LEDOff,
 
-  // The rainbow effect changes the color of all of the keyboard's keys at the same time
-  // running through all the colors of the rainbow.
-  LEDRainbowEffect,
+    // The rainbow effect changes the color of all of the keyboard's keys at the same time
+    // running through all the colors of the rainbow.
+    LEDRainbowEffect,
 
-  // The rainbow wave effect lights up your keyboard with all the colors of a rainbow
-  // and slowly moves the rainbow across your keyboard
-  LEDRainbowWaveEffect,
+    // The rainbow wave effect lights up your keyboard with all the colors of a rainbow
+    // and slowly moves the rainbow across your keyboard
+    LEDRainbowWaveEffect,
 
-  // The chase effect follows the adventure of a blue pixel which chases a red pixel across
-  // your keyboard. Spoiler: the blue pixel never catches the red pixel
-  LEDChaseEffect,
+    // The numpad plugin is responsible for lighting up the 'numpad' mode
+    // with a custom LED effect
+    NumPad,
 
-  // These static effects turn your keyboard's LEDs a variety of colors
-  solidRed, solidOrange, solidYellow, solidGreen, solidBlue, solidIndigo, solidViolet,
+    // The macros plugin adds support for macros
+    Macros,
 
-  // The breathe effect slowly pulses all of the LEDs on your keyboard
-  LEDBreatheEffect,
+    // The MouseKeys plugin lets you add keys to your keymap which move the mouse.
+    // MouseKeys,
 
-  // The AlphaSquare effect prints each character you type, using your
-  // keyboard's LEDs as a display
-  AlphaSquareEffect,
-
-  // The stalker effect lights up the keys you've pressed recently
-  StalkerEffect,
-
-  // The numpad plugin is responsible for lighting up the 'numpad' mode
-  // with a custom LED effect
-  NumPad,
-
-  // The macros plugin adds support for macros
-  Macros,
-
-  // The MouseKeys plugin lets you add keys to your keymap which move the mouse.
-  MouseKeys,
-
-  // The HostPowerManagement plugin enables waking up the host from suspend,
-  // and allows us to turn LEDs off when it goes to sleep.
-  HostPowerManagement
-);
+    // The HostPowerManagement plugin enables waking up the host from suspend,
+    // and allows us to turn LEDs off when it goes to sleep.
+    HostPowerManagement);
 
 /** The 'setup' function is one of the two standard Arduino sketch functions.
  * It's called when your keyboard first powers up. This is where you set up
  * Kaleidoscope and any plugins.
  */
-void setup() {
+void setup()
+{
   // First, call Kaleidoscope's internal setup function
   Kaleidoscope.setup();
 
@@ -376,6 +361,7 @@ void setup() {
   * call Kaleidoscope.loop(); and not do anything custom here.
   */
 
-void loop() {
+void loop()
+{
   Kaleidoscope.loop();
 }
